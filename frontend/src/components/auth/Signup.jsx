@@ -12,9 +12,9 @@ import { setLoading } from "@/redux/auth/authSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const {loading} = useSelector(state => state.auth);
-  const dispatch  = useDispatch()
-   const [input, setInput] = useState({
+  const { loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({
     fullName: "",
     email: "",
     password: "",
@@ -46,74 +46,79 @@ const Signup = () => {
     }
 
     try {
-      dispatch(setLoading(true))
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
       });
-      toast.success(res?.data?.message)
-      navigate("/login")
+      toast.success(res?.data?.message);
+      navigate("/login");
     } catch (error) {
       console.log(error);
-       toast.error(error.res?.data?.message)
-    }finally{
-      dispatch(setLoading(false))
+      toast.error(error.res?.data?.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
   return (
-    <div className="flex items-start justify-center w-full">
+    <div className="flex items-center justify-center h-[82vh] py-20">
       <form
         onSubmit={submithandler}
-        className="w-1/2 border border-gray-200 p-4 my-10 rounded-md bg-white"
+        className="w-[400px] md:w-[450px] border border-gray-200 p-6 rounded-md bg-white shadow-lg"
       >
-        <h1>Sign Up</h1>
+        <h1 className="text-xl font-semibold text-center mb-4">Sign Up</h1>
+
         <div>
           <Label>Full Name</Label>
           <Input
             type="text"
             name="fullName"
             value={input.fullName}
-            placeholder="rahul"
+            placeholder="user-name"
             onChange={changeEventHandler}
           />
         </div>
+
         <div>
           <Label>Email</Label>
           <Input
             type="email"
             name="email"
             value={input.email}
-            placeholder="rahul@gmail.com"
+            placeholder="user@gmail.com"
             onChange={changeEventHandler}
           />
         </div>
+
         <div>
           <Label>Password</Label>
           <Input
             type="password"
             name="password"
             value={input.password}
-            placeholder="12345"
+            placeholder="••••••"
             onChange={changeEventHandler}
           />
         </div>
+
         <div>
           <Label>Phone Number</Label>
           <Input
             type="text"
             name="phoneNumber"
             value={input.phoneNumber}
-            placeholder="8080808080"
+            placeholder="9867XXXXXX"
             onChange={changeEventHandler}
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <RadioGroup className="flex items-center justify-between my-5">
-            <div className="flex items-center space-x-2">
+        <div className="mt-3">
+          <Label>Role</Label>
+          <RadioGroup className="flex gap-4">
+            <div className="flex items-center gap-2">
               <Input
                 type="radio"
                 name="role"
@@ -121,9 +126,9 @@ const Signup = () => {
                 checked={input.role === "student"}
                 onChange={changeEventHandler}
               />
-              <Label htmlFor="r1">Student</Label>
+              <Label>Student</Label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
               <Input
                 type="radio"
                 name="role"
@@ -131,31 +136,31 @@ const Signup = () => {
                 checked={input.role === "recruiter"}
                 onChange={changeEventHandler}
               />
-              <Label htmlFor="r2">Recruiter</Label>
+              <Label>Recruiter</Label>
             </div>
           </RadioGroup>
-          <div className="flex items-center gap-2">
-            <Label>Profile</Label>
-            <Input type="file" accept="image/*" onChange={changeFileHandler} />
-          </div>
         </div>
+
+        <div className="mt-3">
+          <Label>Profile</Label>
+          <Input type="file" accept="image/*" onChange={changeFileHandler} />
+        </div>
+
         {loading ? (
-          <Button className="w-full my-2 bg-[#4331ec]">
-            <Loader2 className="mr- w-4 h-4 animate-spin">
-           
-            </Loader2>
+          <Button className="w-full mt-4 bg-[#4331ec] flex items-center justify-center">
+            <Loader2 className="mr-2 w-4 h-4 animate-spin" />
             Loading...
           </Button>
         ) : (
-          <Button className="w-full my-2 bg-[#4331ec]">Signup</Button>
+          <Button className="w-full mt-4 bg-[#4331ec]">Signup</Button>
         )}
 
-        <span>
-          Already have an account?{" "}
-          <Link to={"/login"} className="text-blue-500">
+        <p className="text-center mt-3">
+          Already have an account?
+          <Link to="/login" className="text-blue-500">
             Login
           </Link>
-        </span>
+        </p>
       </form>
     </div>
   );

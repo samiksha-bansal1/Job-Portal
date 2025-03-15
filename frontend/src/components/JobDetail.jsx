@@ -8,16 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setJob } from "@/redux/job/jobSlice";
 import { toast } from "sonner";
 
-
 const JobDetail = () => {
- 
   const [jobStatus, setJobStatus] = useState(false);
-  const {id} = useParams();
+  const { id } = useParams();
 
   const dispatch = useDispatch();
   const { job } = useSelector((state) => state.job);
   const { user } = useSelector((state) => state.auth);
-
 
   useEffect(() => {
     if (job && user) {
@@ -30,7 +27,7 @@ const JobDetail = () => {
   }, [job, user]);
   const fetchJob = async () => {
     try {
-      console.log(id)
+      console.log(id);
       const res = await axios.get(`${JOB_API_END_POINT}/get/${id}`, {
         withCredentials: true,
       });
@@ -45,10 +42,8 @@ const JobDetail = () => {
   };
 
   useEffect(() => {
-    
-
     fetchJob();
-  }, [id,dispatch]);
+  }, [id, dispatch]);
 
   const applyJobHandler = async () => {
     try {
@@ -123,11 +118,15 @@ const JobDetail = () => {
         </div>
         <div>
           <span className="font-bold">Total Applicants:</span>
-          <span className="text-gray-700 ml-2">{job?.applications.length || 0}</span>
+          <span className="text-gray-700 ml-2">
+            {job?.applications.length || 0}
+          </span>
         </div>
         <div>
           <span className="font-bold">Post Date:</span>
-          <span className="text-gray-700 ml-2">{job?.createdAt.split("T")[0]}</span>
+          <span className="text-gray-700 ml-2">
+            {job?.createdAt.split("T")[0]}
+          </span>
         </div>
         <div>
           <span className="font-bold">Description</span>

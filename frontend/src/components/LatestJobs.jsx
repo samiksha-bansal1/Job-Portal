@@ -12,23 +12,34 @@ const LatestJobs = () => {
 
   const startIndex = (currentPage - 1) * jobsPerPage;
   const currentJobs = allJobs.slice(startIndex, startIndex + jobsPerPage);
+
   return (
-    <div className="max-w-7xl mx-auto my-10 px-10">
-      <h1 className="font-bold text-2xl mb-8">Latest Jobs</h1>
-      <p>Get your desired job from top companies</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-5">
-        {currentJobs.length !== 0 ? (
+    <div className="max-w-7xl mx-auto my-10 px-6 sm:px-10">
+      <h1 className="font-bold text-3xl text-gray-800 mb-6">Latest Jobs</h1>
+      <p className="text-lg text-gray-600 mb-10">
+        Get your desired job from top companies
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {currentJobs.length > 0 ? (
           currentJobs.map((job, index) => <JobCard key={index} job={job} />)
         ) : (
-          <span>NO Jobs Available</span>
+          <div className="col-span-full text-center py-12 bg-gray-100 rounded-lg">
+            <span className="text-lg font-semibold text-gray-700">
+              No Jobs Available
+            </span>
+          </div>
         )}
       </div>
-      <PaginationCard
-        currentPage={currentPage}
-        jobsPerPage={jobsPerPage}
-        totalJobs={allJobs.length}
-        setCurrentPage={setCurrentPage}
-      />
+
+      {allJobs.length > jobsPerPage && (
+        <PaginationCard
+          currentPage={currentPage}
+          jobsPerPage={jobsPerPage}
+          totalJobs={allJobs.length}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 };

@@ -12,55 +12,83 @@ const Profile = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded border p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-24 w-24">
-              <AvatarImage src={user?.profile?.profilePhoto} />
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow-md p-8 h-[75vh] mt-10">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-6">
+            <Avatar className="h-32 w-32 border-4 border-indigo-600 shadow-xl">
+              <AvatarImage
+                src={user?.profile?.profilePhoto || "public/useravatar.png"}
+                alt="User Avatar"
+                className="object-cover"
+              />
             </Avatar>
             <div>
-              <h1 className="text-xl font-semibold">{user?.fullName}</h1>
-              <p>{user?.profile?.bio}</p>
+              <h1 className="text-2xl font-semibold text-gray-800">
+                {user?.fullName}
+              </h1>
+              <p className="text-gray-600 text-md mt-2">{user?.profile?.bio}</p>
             </div>
           </div>
-          <Button variant="outline" onClick={() => setOpen(true)}>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 text-indigo-600 hover:text-white hover:bg-indigo-600"
+            onClick={() => setOpen(true)}
+          >
             <Pen />
+            Edit Profile
           </Button>
         </div>
-        <div className="mt-4 sapce-y-2">
-          <div className="flex items-center gap-4">
-            <Mail />
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-4 text-gray-600">
+            <Mail className="text-indigo-600" />
             <span>{user?.email}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Contact />
+          <div className="flex items-center gap-4 text-gray-600">
+            <Contact className="text-indigo-600" />
             <span>{user?.phoneNumber}</span>
           </div>
+
           <div>
-            <h1 className="font-semibold">Skills</h1>
-            <div className="flex flex-wrap mt-2">
-               
-              {user?.profile?.skills.length !== 0 ? (
-                user?.profile?.skills.map((skill, index) => (
-                  <Badge className="mr-2" key={index}>{skill}</Badge>
+            <h2 className="text-lg font-semibold text-gray-800">Skills</h2>
+            <div className="flex flex-wrap mt-2 gap-2">
+              {user?.profile?.skills.length > 0 ? (
+                user.profile.skills.map((skill, index) => (
+                  <Badge
+                    key={index}
+                    className="bg-indigo-100 text-indigo-600 hover:bg-indigo-200 cursor-pointer transition"
+                  >
+                    {skill}
+                  </Badge>
                 ))
               ) : (
-                <span>NA</span>
+                <span className="text-gray-500">No skills listed</span>
               )}
             </div>
           </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Label className="text-sm font-semibold">Resume</Label>
+
+          <div className="flex items-center gap-2 mt-4">
+            <Label className="text-sm font-semibold text-gray-800">
+              Resume
+            </Label>
             {user?.profile?.resume ? (
-              <a href={user?.profile?.resume}>{user?.profile?.resumeName}</a>
+              <a
+                href={user?.profile?.resume}
+                className="text-indigo-600 hover:text-indigo-800 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {user?.profile?.resumeName}
+              </a>
             ) : (
-              <span>NA</span>
+              <span className="text-gray-500">No resume uploaded</span>
             )}
           </div>
         </div>
       </div>
-      <UpdateProfile open={open} setOpen={setOpen}/>
+
+      <UpdateProfile open={open} setOpen={setOpen} />
     </div>
   );
 };

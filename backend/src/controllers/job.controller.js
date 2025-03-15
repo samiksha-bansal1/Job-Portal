@@ -78,40 +78,39 @@ export const getAllJobs = async (req, res) => {
   }
 };
 
+export const getJobById = async (req, res) => {
+  try {
+    const jobId = req.params.id;
 
-export const getJobById = async(req,res) =>{
-    try {
-        const jobId = req.params.id;
-      
-        const job = await Job.findById(jobId).populate({
-          path:"applications"
-        })
+    const job = await Job.findById(jobId).populate({
+      path: "applications",
+    });
 
-        if(!job){
-            return handleRespone(res, 400, false, "no job found")
-        }
-      
-        return handleRespone(res, 200, true, "job retrieved successfully", job)
-    } catch (error) {
-        console.log(error)
-        return handleRespone(res, 500, false, "Error during getting job by id")
+    if (!job) {
+      return handleRespone(res, 400, false, "no job found");
     }
-}
 
-export const getAdminJobs = async(req,res) => {
-    try {
-        const adminId = req.id;
+    return handleRespone(res, 200, true, "job retrieved successfully", job);
+  } catch (error) {
+    console.log(error);
+    return handleRespone(res, 500, false, "Error during getting job by id");
+  }
+};
 
-        const jobs = await Job.find({created_by:adminId}).populate({
-            path:"company",
-            createdAt:-1
-        });
-        if(!jobs.length){
-            return handleRespone(res, 400, false, "no jobs found")
-        }
-        return handleRespone(res, 200, true, "jobs retrieved successfully", jobs)
-    } catch (error) {
-        console.log(error)
-        return handleRespone(res, 500, false, "error during getting admin jobs")
+export const getAdminJobs = async (req, res) => {
+  try {
+    const adminId = req.id;
+
+    const jobs = await Job.find({ created_by: adminId }).populate({
+      path: "company",
+      createdAt: -1,
+    });
+    if (!jobs.length) {
+      return handleRespone(res, 400, false, "no jobs found");
     }
-}
+    return handleRespone(res, 200, true, "jobs retrieved successfully", jobs);
+  } catch (error) {
+    console.log(error);
+    return handleRespone(res, 500, false, "error during getting admin jobs");
+  }
+};

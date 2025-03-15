@@ -32,21 +32,33 @@ const companies = [
 
 const FeatureCompanies = () => {
   return (
-    <div className="flex items-center px-6 bg-white shadow-md">
-      <h1 className="font-semibold text-xl">Trusted By</h1>
-      <Carousel className="w-full max-w-4xl mx-auto">
-        <CarouselNext />
-        <CarouselPrevious />
-        <CarouselContent>
-          {companies.map((company, index) => {
-            return (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4 py-2">
-                <img src={company.img} alt={company.name} className="w-64 h-16  object-contain" />
+    <div className="bg-white shadow-md py-6">
+      <h1 className="text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">
+        Trusted By Leading Companies
+      </h1>
+
+      <div className="relative w-full max-w-6xl mx-auto px-4">
+        <Carousel className="w-full">
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+          <CarouselContent className="flex items-center justify-center">
+            {companies.map((company, index) => (
+              <CarouselItem
+                key={index}
+                className="basis-1/2 md:basis-1/3 lg:basis-1/5 py-2"
+              >
+                <div className="flex justify-center items-center">
+                  <img
+                    src={company.img}
+                    alt={company.name}
+                    className="w-36 h-16 object-contain"
+                  />
+                </div>
               </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-      </Carousel>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </div>
     </div>
   );
 };

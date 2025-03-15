@@ -1,13 +1,12 @@
-import React from 'react'
-import AppliedJobs from './AppliedJobs'
+import React from "react";
+import AppliedJobs from "./AppliedJobs";
 
 const MyJobs = () => {
   return (
-    <div className='bg-white rounded p-6'>
-        <h1 className='text-2xl font-bold mb-3'>Applied Jobs</h1>
-        <AppliedJobs />
+    <div className="bg-white rounded p-6 min-h-[83vh] flex flex-col">
+      <AppliedJobs />
     </div>
-  )
-}
+  );
+};
 
-export default MyJobs
+export default MyJobs;

@@ -1,29 +1,33 @@
 import jwt from "jsonwebtoken";
 
+const SECRET_KEY = "secretkey123$^12341";
+
 const isAuthenticate = async (req, res, next) => {
   try {
     const token = req.cookies.token;
+
     if (!token) {
       return res.status(401).json({
-        message: "User not authenticate",
         success: false,
+        message: "User not authenticated. Please log in.",
       });
     }
 
-    const decode = await jwt.verify(token, process.env.SECRET_KEY);
-    if (!decode) {
+    try {
+      const decoded = jwt.verify(token, SECRET_KEY);
+      req.id = decoded.userId;
+      next();
+    } catch (jwtError) {
       return res.status(401).json({
-        message: "Invalid tiken",
         success: false,
+        message: "Invalid or expired token. Please log in again.",
       });
     }
-
-    req.id = decode.userId;
-    next();
   } catch (error) {
+    console.error("Authentication Error:", error.message);
     return res.status(500).json({
-      message: "internal server error",
       success: false,
+      message: "Internal server error during authentication.",
     });
   }
 };

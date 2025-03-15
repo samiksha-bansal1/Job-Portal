@@ -11,42 +11,55 @@ const filterData = [
   },
   {
     filterType: "Role",
-    array: ["Frontend Developer", "Backend Developer", "FullStack Develope"],
+    array: ["Frontend Developer", "Backend Developer", "FullStack Developer"],
   },
   {
     filterType: "Salary",
-    array: ["6-10", "11-16", "17-30"],
+    array: ["6-10 LPA", "11-16 LPA", "17-30 LPA"],
   },
 ];
 
 const FilterCard = () => {
   const [selectedValue, setSelectedValue] = useState("");
   const dispatch = useDispatch();
+
   const changeHandler = (value) => {
-    setSelectedValue(value)
-  }
+    setSelectedValue(value);
+  };
 
   useEffect(() => {
-    dispatch(setSearchQuery(selectedValue))
-  },[selectedValue])
+    dispatch(setSearchQuery(selectedValue));
+  }, [selectedValue]);
+
   return (
-    <div className="bg-white p-4 rounded-md shadow-md my-5">
-      <h1 className="font-bold text-xl">Filter job</h1>
-      <hr className="my-3" />
+    <div className="bg-white p-6 rounded-xl shadow-lg my-5 max-w-md mx-auto md:max-w-xl">
+      <h1 className="font-bold text-2xl text-gray-700 mb-4">Filter Jobs</h1>
+      <hr className="my-4 border-t border-gray-300" />
+
       <RadioGroup value={selectedValue} onValueChange={changeHandler}>
         {filterData.map((data, index) => {
           return (
-            <div key={index}>
-              <h1 className="font-bold text-lg">{data.filterType}</h1>
-              {data.array.map((item, key) => {
-                const itemId = `${index} - ${key}`
-                return (
-                  <div className="flex items-center my-2 space-x-2" key={key}>
-                    <RadioGroupItem  value={item} id={itemId}/>
-                    <Label htmlFor={itemId}>{item}</Label>
-                  </div>
-                );
-              })}
+            <div key={index} className="mb-4">
+              <h2 className="font-semibold text-lg text-gray-800">
+                {data.filterType}
+              </h2>
+              <div className="space-y-2 mt-2">
+                {data.array.map((item, key) => {
+                  const itemId = `${index}-${key}`;
+                  return (
+                    <div className="flex items-center space-x-2" key={key}>
+                      <RadioGroupItem
+                        value={item}
+                        id={itemId}
+                        className="text-blue-600 hover:text-blue-800 transition duration-300"
+                      />
+                      <Label htmlFor={itemId} className="text-gray-600 text-sm">
+                        {item}
+                      </Label>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}

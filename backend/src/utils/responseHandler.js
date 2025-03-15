@@ -1,7 +1,12 @@
+export const handleRespone = (
+  res,
+  statusCode,
+  success,
+  message,
+  data = null
+) => {
+  const response = { success, message };
+  if (data) response.data = data;
 
-export  const handleRespone  = (res, statusCode, success, message, data=null) => {
-    const response ={success,  message};
-    if(data) response.data = data;
-
-    return res.status(statusCode).json(response);
-}
+  return res.status(statusCode).json(response);
+};
